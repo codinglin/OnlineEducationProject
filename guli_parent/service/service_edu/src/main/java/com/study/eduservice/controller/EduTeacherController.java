@@ -4,6 +4,7 @@ package com.study.eduservice.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.commonutils.ResponseEntity;
+import com.study.commonutils.utils.PageUtils;
 import com.study.eduservice.entity.EduTeacher;
 import com.study.eduservice.entity.vo.TeacherQuery;
 import com.study.eduservice.service.EduTeacherService;
@@ -15,7 +16,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -78,37 +81,43 @@ public class EduTeacherController {
     public ResponseEntity pageTeacherCondition(@PathVariable long current,@PathVariable long limit,
                                   @RequestBody(required = false) TeacherQuery teacherQuery) {
         //创建page对象
-        Page<EduTeacher> pageTeacher = new Page<>(current,limit);
+//        Page<EduTeacher> pageTeacher = new Page<>(current,limit);
+//
+//        //构建条件
+//        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
+//        // 多条件组合查询
+//        // mybatis学过 动态sql
+//        String name = teacherQuery.getName();
+//        Integer level = teacherQuery.getLevel();
+//        String begin = teacherQuery.getBegin();
+//        String end = teacherQuery.getEnd();
+//        //判断条件值是否为空，如果不为空拼接条件
+//        if(!StringUtils.hasLength(name)) {
+//            //构建条件
+//            wrapper.like("name",name);
+//        }
+//        if(!StringUtils.isEmpty(level)) {
+//            wrapper.eq("level",level);
+//        }
+//        if(!StringUtils.hasLength(begin)) {
+//            wrapper.ge("gmt_create",begin);
+//        }
+//        if(!StringUtils.hasLength(end)) {
+//            wrapper.le("gmt_create",end);
+//        }
+//
+//        //调用方法实现条件查询分页
+//        teacherService.page(pageTeacher,wrapper);
+//
+//        long total = pageTeacher.getTotal();//总记录数
+//        List<EduTeacher> records = pageTeacher.getRecords(); //数据list集合
 
-        //构建条件
-        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
-        // 多条件组合查询
-        // mybatis学过 动态sql
-        String name = teacherQuery.getName();
-        Integer level = teacherQuery.getLevel();
-        String begin = teacherQuery.getBegin();
-        String end = teacherQuery.getEnd();
-        //判断条件值是否为空，如果不为空拼接条件
-        if(!StringUtils.hasLength(name)) {
-            //构建条件
-            wrapper.like("name",name);
-        }
-        if(!StringUtils.isEmpty(level)) {
-            wrapper.eq("level",level);
-        }
-        if(!StringUtils.hasLength(begin)) {
-            wrapper.ge("gmt_create",begin);
-        }
-        if(!StringUtils.hasLength(end)) {
-            wrapper.le("gmt_create",end);
-        }
-
-        //调用方法实现条件查询分页
-        teacherService.page(pageTeacher,wrapper);
-
-        long total = pageTeacher.getTotal();//总记录数
-        List<EduTeacher> records = pageTeacher.getRecords(); //数据list集合
-        return ResponseEntity.success().data("total",total).data("rows",records);
+        Map<String,Object> params = new HashMap<>();
+        params.put("current",String.valueOf(current));
+        params.put("limit",String.valueOf(limit));
+        params.put("teacherQuery",teacherQuery);
+        PageUtils page = teacherService.queryBaseAttrPage(params);
+        return ResponseEntity.success().data("page",page);
     }
 }
 
