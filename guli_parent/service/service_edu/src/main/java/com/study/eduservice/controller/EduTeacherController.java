@@ -11,6 +11,7 @@ import com.study.eduservice.service.EduTeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,7 @@ public class EduTeacherController {
     //3 分页查询讲师的方法
     //current 当前页
     //limit 每页记录数
-    @GetMapping("pageTeacher/{current}/{limit}")
+    @GetMapping("/pageTeacher/{current}/{limit}")
     public ResponseEntity pageListTeacher(@PathVariable long current,
                              @PathVariable long limit) {
         //创建page对象
@@ -77,7 +78,7 @@ public class EduTeacherController {
     }
 
     //4.条件查询带分页的方法
-    @PostMapping("pageTeacherCondition/{current}/{limit}")
+    @PostMapping("/pageTeacherCondition/{current}/{limit}")
     public ResponseEntity pageTeacherCondition(@PathVariable long current,@PathVariable long limit,
                                   @RequestBody(required = false) TeacherQuery teacherQuery) {
         //创建page对象
@@ -118,6 +119,38 @@ public class EduTeacherController {
         params.put("teacherQuery",teacherQuery);
         PageUtils page = teacherService.queryBaseAttrPage(params);
         return ResponseEntity.success().data("page",page);
+    }
+
+    //添加讲师
+    @PostMapping("/addTeacher")
+    public ResponseEntity addTeacher(@RequestBody EduTeacher eduTeacher){
+        boolean flag = teacherService.save(eduTeacher);
+        return flag?ResponseEntity.success():ResponseEntity.error();
+    }
+
+    //根据讲师id进行查询
+    @GetMapping("/getTeacher/{id}")
+    public ResponseEntity getTeacher(@PathVariable String id) {
+        EduTeacher eduTeacher = teacherService.getById(id);
+        return ResponseEntity.success().data("teacher",eduTeacher);
+    }
+
+    //讲师修改功能
+    @PostMapping("/updateTeacher")
+    public ResponseEntity updateTeacher(@RequestBody EduTeacher eduTeacher) {
+        boolean flag = teacherService.updateById(eduTeacher);
+        return flag?ResponseEntity.success():ResponseEntity.error();
+    }
+
+    //根据Id修改
+    @ApiOperation(value = "根据ID修改讲师")
+    @PutMapping("/{id}")
+    public ResponseEntity updateById(@PathVariable("id") String id,
+                                     @RequestBody EduTeacher teacher){
+        EduTeacher eduTeacher = teacherService.getById(id);
+        BeanUtils.copyProperties(teacher,eduTeacher);
+        teacherService.updateById(eduTeacher);
+        return ResponseEntity.success();
     }
 }
 

@@ -32,7 +32,6 @@ public class Query<T> {
         //分页参数
         params.put(Constant.PAGE, page);
 
-        System.out.println(curPage+"-->"+limit);
         //排序字段
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
         String orderField = SQLFilter.sqlInject((String)params.get(Constant.ORDER_FIELD));
