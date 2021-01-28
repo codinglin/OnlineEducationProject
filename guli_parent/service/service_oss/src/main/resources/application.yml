@@ -1,0 +1,17 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: service-oss
+  profiles:
+    active: dev
+
+# 阿里云OSS配置
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-hangzhou.aliyuncs.com
+      keyid: 你的ID
+      keysecret: 你的密钥
+      bucketname: 你的bucket名称
