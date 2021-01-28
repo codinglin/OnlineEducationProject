@@ -9,4 +9,4 @@
 
 后端：guli_parent
 
-前端：vue-element-admin
+前端：vue-admin-element
