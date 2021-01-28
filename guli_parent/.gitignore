@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+guli_parent/service/service_oss/src/main/resources/application.yml
 
 ### STS ###
 .apt_generated
