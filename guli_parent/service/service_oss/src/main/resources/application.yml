@@ -12,6 +12,6 @@ aliyun:
   oss:
     file:
       endpoint: oss-cn-hangzhou.aliyuncs.com
-      keyid: 你的ID
-      keysecret: 你的密钥
-      bucketname: 你的bucket名称
+      keyid: LTAI4G3dhDCFHAkuUZmXUP2s
+      keysecret: uT1xVqHm79HhYPBKpm9Ikx1ILFgQps
+      bucketname: online-education-lin
