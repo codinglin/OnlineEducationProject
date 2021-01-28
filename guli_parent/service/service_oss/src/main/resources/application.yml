@@ -14,4 +14,4 @@ aliyun:
       endpoint: oss-cn-hangzhou.aliyuncs.com
       keyid: 你的ID
       keysecret: 你的密钥
-      bucketname: 你的bucket名称
+      bucketname: 你的bucket名称！
