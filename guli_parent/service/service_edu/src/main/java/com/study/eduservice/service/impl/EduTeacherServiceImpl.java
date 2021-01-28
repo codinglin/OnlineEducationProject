@@ -52,6 +52,8 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
         if(StringUtils.hasLength(end)) {
             wrapper.le("gmt_create",end);
         }
+        //排序
+        wrapper.orderByDesc("gmt_create");
         IPage<EduTeacher> page = this.page(
                 new Query<EduTeacher>().getPage(params),
                 wrapper
