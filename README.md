@@ -5,4 +5,8 @@
 
 **day1**: mybatis-plus-demo
 
-**主要项目** guli_parent
+**主要项目**  
+
+后端：guli_parent
+
+前端：vue-element-admin
